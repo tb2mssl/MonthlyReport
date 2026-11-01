@@ -42,7 +42,6 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(2,132,199,.15); }
 .form-group textarea { resize: vertical; min-height: 78px; line-height: 1.45; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
-.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
 
 .file-input-box { border: 1.5px dashed #b9c6d8; padding: 9px 6px; border-radius: 8px; background: var(--soft); text-align: center; transition: background .15s, border-color .15s; }
 .file-input-box:hover { background: #edf4fb; border-color: var(--accent); }
@@ -100,14 +99,11 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 .report-header p { font-size: .74rem; color: #475569; font-weight: 500; margin-top: 3px; }
 
 /* Meta strip */
-.meta-grid { display: grid; grid-template-columns: 1fr 1.15fr 1.3fr .8fr; background: var(--soft); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.meta-grid { display: grid; grid-template-columns: 1fr 1.4fr .8fr; background: var(--soft); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .meta-item { padding: 7px 11px; border-right: 1px solid var(--line); }
 .meta-item:last-child { border-right: none; }
 .m-lbl { font-size: .6rem; color: var(--muted); font-weight: 600; letter-spacing: .3px; }
 .m-val { font-size: .8rem; font-weight: 700; color: var(--navy); margin-top: 2px; }
-.m-val small { font-weight: 600; color: var(--muted); font-size: .68rem; }
-.meter { height: 4px; background: #dfe8f3; border-radius: 3px; margin-top: 4px; overflow: hidden; }
-.meter i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--teal)); border-radius: 3px; }
 
 .status-pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .65rem; font-weight: 700; }
 .status-completed { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
@@ -211,13 +207,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
           </select>
         </div>
       </div>
-
-      <div class="section-title">Attendance & Schedule</div>
-      <div class="row-3">
-        <div class="form-group"><label>Class Strength</label><input type="number" id="inStrength" value="28" min="0" oninput="updateReport()"></div>
-        <div class="form-group"><label>Attended</label><input type="number" id="inAttended" value="26" min="0" oninput="updateReport()"></div>
-        <div class="form-group"><label>Session Timing</label><input type="text" id="inTiming" value="Tue & Thu (2:00 - 3:30 PM)" oninput="updateReport()"></div>
-      </div>
+      <div class="form-group"><label>Session Timing</label><input type="text" id="inTiming" value="Tue & Thu (2:00 - 3:30 PM)" oninput="updateReport()"></div>
 
       <div class="section-title">4 Class Action Images</div>
       <div class="row">
@@ -294,11 +284,6 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
         <div class="meta-item">
           <div class="m-lbl">Session Schedule</div>
           <div class="m-val" id="outTiming">Tue & Thu (2:00 - 3:30 PM)</div>
-        </div>
-        <div class="meta-item">
-          <div class="m-lbl">Attendance</div>
-          <div class="m-val"><span id="outAttended">26</span> / <span id="outStrength">28</span> <small>present (<span id="outPercent">93%</span>)</small></div>
-          <div class="meter"><i id="outMeter" style="width:93%"></i></div>
         </div>
         <div class="meta-item">
           <div class="m-lbl">Project Status</div>
@@ -387,15 +372,6 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
     $('outTiming').innerText = $('inTiming').value || '—';
     $('outCoach').innerText = $('inCoach').value || '—';
     $('outSchoolName').innerText = $('inSchoolName').value || 'School Partner';
-
-    // Attendance
-    var strength = parseInt($('inStrength').value) || 0;
-    var attended = parseInt($('inAttended').value) || 0;
-    var rate = strength > 0 ? Math.min(100, Math.round((attended / strength) * 100)) : 0;
-    $('outStrength').innerText = strength;
-    $('outAttended').innerText = attended;
-    $('outPercent').innerText = rate + '%';
-    $('outMeter').style.width = rate + '%';
 
     // Status pill
     var statusVal = $('inStatus').value;
