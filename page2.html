@@ -5,511 +5,400 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Robotics Monthly Performance Report</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-    --primary: #1e3a8a;
-    --accent: #0284c7;
-    --cyan: #0e7490;
-    --text: #0f172a;
-    --border: #cbd5e1;
-    --bg: #f1f5f9;
+  --navy: #14296b;
+  --primary: #1e3a8a;
+  --accent: #0284c7;
+  --teal: #0e7490;
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: #dbe3ee;
+  --soft: #f5f8fc;
+  --bg: #eaf0f7;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 16px; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 16px; -webkit-font-smoothing: antialiased; }
 
-/* LAYOUT */
-.app {
-    display: grid;
-    grid-template-columns: 480px 1fr;
-    gap: 20px;
-    max-width: 1720px;
-    margin: 0 auto;
-}
+/* ---------- APP LAYOUT ---------- */
+.app { display: grid; grid-template-columns: 440px 1fr; gap: 20px; max-width: 1700px; margin: 0 auto; }
 
-/* CONTROL PANEL */
-.ctrl {
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,.07);
-    height: calc(100vh - 32px);
-    overflow-y: auto;
-}
-.ctrl h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 7px; }
-.sec { font-size: .68rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin: 13px 0 5px; letter-spacing: .5px; border-left: 3px solid var(--accent); padding-left: 6px; }
-.fg { margin-bottom: 8px; }
-.fg label { display: block; font-size: .76rem; font-weight: 600; color: #334155; margin-bottom: 3px; }
-.fg input, .fg select, .fg textarea {
-    width: 100%; padding: 7px 9px; border: 1px solid var(--border);
-    border-radius: 6px; font-family: inherit; font-size: .8rem; color: var(--text);
-}
-.fg textarea { resize: vertical; min-height: 75px; line-height: 1.4; }
-.r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.r3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+/* ---------- CONTROL PANEL ---------- */
+.ctrl { background: #fff; border-radius: 14px; box-shadow: 0 4px 18px rgba(20,41,107,.08); height: calc(100vh - 32px); overflow-y: auto; }
+.ctrl-head { position: sticky; top: 0; z-index: 5; background: linear-gradient(135deg, var(--navy), var(--accent)); color: #fff; padding: 16px 20px; }
+.ctrl-head h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: .2px; }
+.ctrl-head a { display: inline-block; margin-top: 4px; font-size: .74rem; color: #cfe8fb; text-decoration: none; border-bottom: 1px dotted #cfe8fb; }
+.ctrl-head a:hover { color: #fff; }
+.ctrl-body { padding: 6px 20px 20px; }
 
-.fbox { border: 1px dashed var(--border); padding: 8px 6px; border-radius: 6px; background: #f8fafc; text-align: center; }
-.fbox input { display: none; }
-.fbox label { cursor: pointer; color: var(--accent); font-weight: 600; font-size: .72rem; display: block; }
-.fbox small { display: block; color: #94a3b8; font-size: .62rem; margin-top: 2px; }
+.sec { display: flex; align-items: center; gap: 8px; font-size: .72rem; font-weight: 700; color: var(--primary); margin: 18px 0 9px; padding-bottom: 5px; border-bottom: 1px solid var(--line); letter-spacing: .3px; text-transform: uppercase; }
+.sec::before { content: ""; width: 4px; height: 12px; border-radius: 2px; background: var(--accent); }
 
-.sl-row { display: flex; align-items: center; gap: 8px; }
-.sl-row input[type="range"] { flex: 1; }
-.sl-row span { font-size: .75rem; font-weight: 700; color: var(--primary); min-width: 32px; }
+.fg { margin-bottom: 9px; }
+.fg label { display: block; font-size: .74rem; font-weight: 600; color: #334155; margin-bottom: 3px; }
+.fg input, .fg select, .fg textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; font-family: inherit; font-size: .82rem; color: var(--text); background: #fff; transition: border-color .15s, box-shadow .15s; }
+.fg input:focus, .fg select:focus, .fg textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(2,132,199,.15); }
+.fg textarea { resize: vertical; min-height: 78px; line-height: 1.45; }
+.r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 
-.btn-row { display: flex; gap: 6px; margin-top: 4px; }
-.btn-sm { flex: 1; padding: 4px; font-size: .65rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: #fff; border-radius: 4px; }
+.fbox { border: 1.5px dashed #b9c6d8; padding: 9px 6px; border-radius: 8px; background: var(--soft); text-align: center; transition: background .15s, border-color .15s; }
+.fbox:hover { background: #edf4fb; border-color: var(--accent); }
+.fbox input[type="file"] { display: none; }
+.fbox label { cursor: pointer; color: var(--accent); font-weight: 600; font-size: .74rem; display: block; }
+.fbox small { display: block; color: #94a3b8; font-size: .64rem; margin-top: 2px; }
+
+.sl-row { display: flex; align-items: center; gap: 10px; }
+.sl-row input[type="range"] { flex: 1; accent-color: var(--accent); padding: 0; }
+.sl-row span { font-size: .76rem; font-weight: 700; color: var(--primary); min-width: 34px; text-align: right; }
+
+.btn-row { display: flex; gap: 5px; margin-top: 6px; }
+.btn-sm { flex: 1; padding: 4px 0; font-size: .68rem; font-weight: 600; cursor: pointer; border: 1px solid var(--line); background: #fff; border-radius: 5px; color: #334155; font-family: inherit; }
 .btn-sm:hover { background: #e2e8f0; }
 
-.actions { display: flex; gap: 8px; margin-top: 14px; }
-.btn { flex: 1; padding: 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: none; font-size: .82rem; transition: opacity .2s; }
-.btn:hover { opacity: .88; }
+.actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn { flex: 1; padding: 11px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: .84rem; font-family: inherit; transition: transform .1s, opacity .15s; }
+.btn:hover { opacity: .9; }
+.btn:active { transform: translateY(1px); }
 .btn-p { background: var(--primary); color: #fff; }
 .btn-s { background: #e2e8f0; color: #334155; }
 
-/* A4 PREVIEW */
-.preview {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: calc(100vh - 32px);
-    overflow-y: auto;
-}
+/* ---------- A4 PREVIEW ---------- */
+.preview { display: flex; justify-content: center; align-items: flex-start; height: calc(100vh - 32px); overflow-y: auto; padding-bottom: 20px; }
 
 .sheet {
-    background: #fff;
-    width: 210mm;
-    min-height: 297mm;
-    padding: 10mm 12mm 10mm 24mm; /* Left gutter for binding/puncture */
-    box-shadow: 0 8px 30px rgba(0,0,0,.14);
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    position: relative;
-    overflow: hidden;
+  background: #fff;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 13mm 12mm 11mm 25mm;   /* wide left gutter for binding holes */
+  box-shadow: 0 10px 34px rgba(20,41,107,.18);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  position: relative;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-/* WATERMARK */
-#wmLayer {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0;
-}
-#wmLayer img {
-    width: 65%; transform: rotate(-32deg); object-fit: contain; filter: grayscale(50%); opacity: .08;
-}
-.sheet > *:not(#wmLayer):not(.ph) { position: relative; z-index: 1; }
+/* Top brand bar and page frame */
+.sheet::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5mm; background: linear-gradient(90deg, var(--navy), var(--primary) 55%, var(--accent)); border-radius: 3px 3px 0 0; z-index: 2; }
+.frame { position: absolute; top: 8mm; right: 6mm; bottom: 6mm; left: 18mm; border: 0.6pt solid #cfd9e6; border-radius: 2px; pointer-events: none; z-index: 2; }
 
-/* PUNCH HOLES */
-.ph { position: absolute; left: 7.5mm; width: 5.5mm; height: 5.5mm; border: 1px dashed #b0bec5; border-radius: 50%; z-index: 2; pointer-events: none; }
+/* Watermark */
+#wmLayer { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; overflow: hidden; border-radius: 3px; }
+#wmLayer img { width: 62%; transform: rotate(-32deg); object-fit: contain; filter: grayscale(50%); opacity: .08; }
+.sheet > *:not(#wmLayer):not(.ph):not(.frame) { position: relative; z-index: 1; }
+
+/* Punch hole guides */
+.ph { position: absolute; left: 7mm; width: 5.5mm; height: 5.5mm; border: 1px dashed #b7c3d2; border-radius: 50%; z-index: 2; pointer-events: none; }
 .ph1 { top: 60mm; } .ph2 { top: 148mm; } .ph3 { bottom: 60mm; }
 
-/* HEADER */
-.hdr {
-    display: grid;
-    grid-template-columns: 85px 1fr 85px;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 2.5px solid var(--primary);
-    padding-bottom: 6px;
-}
-.logo-box {
-    width: 85px; height: 50px; border: 1px dashed #cbd5e1; border-radius: 5px;
-    display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fafafa;
-}
-.logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.logo-box span { font-size: .56rem; color: #94a3b8; text-align: center; font-weight: 600; padding: 2px; }
-
-/* Alignment utility classes */
-.align-left { justify-content: flex-start !important; padding-left: 4px; }
-.align-center { justify-content: center !important; }
-.align-right { justify-content: flex-end !important; padding-right: 4px; }
-
+/* Header */
+.hdr { padding: 4mm 4mm 9px; border-bottom: 2px solid var(--primary); }
 .hc { text-align: center; }
-.hc h1 { font-size: 1.05rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.2; }
-.hc p { font-size: .72rem; color: #475569; font-weight: 600; margin-top: 2px; }
+.hc .kicker { font-size: .62rem; font-weight: 600; color: var(--accent); letter-spacing: 1.6px; text-transform: uppercase; }
+.hc h1 { font-size: 1.28rem; color: var(--navy); font-weight: 800; line-height: 1.2; margin-top: 3px; }
+.hc p { font-size: .74rem; color: #475569; font-weight: 500; margin-top: 3px; }
 
-/* META BAR */
-.meta {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    padding: 6px 9px;
-}
-.mi .ml { font-size: .58rem; text-transform: uppercase; color: #64748b; font-weight: 700; }
-.mi .mv { font-size: .76rem; font-weight: 600; color: #0f172a; margin-top: 1px; }
-.pill { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: .63rem; font-weight: 700; text-transform: uppercase; }
+/* Meta strip */
+.meta { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--soft); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.mi { padding: 7px 11px; border-right: 1px solid var(--line); }
+.mi:last-child { border-right: none; }
+.mi .ml { font-size: .6rem; color: var(--muted); font-weight: 600; letter-spacing: .3px; }
+.mi .mv { font-size: .8rem; font-weight: 700; color: var(--navy); margin-top: 2px; }
+.pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .65rem; font-weight: 700; }
 .p-done { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
 .p-prog { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
 
-/* 4 IMAGES */
-.img-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.img-card {
-    aspect-ratio: 4/3; border: 1px solid #e2e8f0; border-radius: 5px; background: #f1f5f9;
-    overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;
-}
+/* Section headings in report */
+.sh { display: flex; align-items: center; gap: 7px; font-size: .78rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+.sh .chip { width: 17px; height: 17px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+.chip.c1 { background: var(--primary); } .chip.c2 { background: var(--teal); } .chip.c3 { background: var(--accent); } .chip.c0 { background: var(--navy); }
+.sh::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* Photo gallery */
+.img-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.fig { display: flex; flex-direction: column; gap: 3px; }
+.img-card { aspect-ratio: 4/3; border: 1px solid var(--line); border-radius: 6px; background: #eef3f9; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
 .img-card img { width: 100%; height: 100%; object-fit: cover; }
-.img-card span { font-size: .58rem; color: #94a3b8; font-weight: 600; text-align: center; padding: 2px; }
-.del-img-btn {
-    position: absolute; top: 3px; right: 3px; background: rgba(0,0,0,0.6); color: #fff;
-    border: none; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; cursor: pointer; display: none; align-items: center; justify-content: center;
-}
-.img-card:hover .del-img-btn { display: flex; }
+.img-card span { font-size: .62rem; color: #9aa8bb; font-weight: 600; }
+.fig figcaption { font-size: .62rem; color: var(--muted); font-weight: 600; text-align: center; }
+.del-img-btn { position: absolute; top: 3px; right: 3px; background: rgba(15,23,42,.65); color: #fff; border: none; border-radius: 50%; width: 17px; height: 17px; font-size: 11px; cursor: pointer; display: none; align-items: center; justify-content: center; }
+.img-card:hover .del-img-btn, .inv-photo:hover .del-img-btn { display: flex; }
 
-/* NARRATIVE SECTION (Learning Outcome & Real World Connect) */
-.dual { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.nb { border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 8px; background: #f8fafc; }
-.nb.lo { border-left: 3px solid var(--primary); }
-.nb.rwa { border-left: 3px solid var(--cyan); }
-.nb-ttl { font-size: .64rem; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
-.nb-ttl.lo-c { color: var(--primary); }
-.nb-ttl.rwa-c { color: var(--cyan); }
-.nb-body { font-size: .66rem; line-height: 1.42; color: #334155; text-align: justify; }
+/* Narrative panels */
+.dual { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
+.nb { border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; background: rgba(245,248,252,.85); display: flex; flex-direction: column; }
+.nb.lo { border-top: 3px solid var(--primary); }
+.nb.rwa { border-top: 3px solid var(--teal); }
+.nb-body { font-size: .71rem; line-height: 1.55; color: #2f3b4e; text-align: justify; hyphens: auto; }
 
-/* INVENTION STORY SECTION */
-.inv {
-    border: 1px solid #e2e8f0; border-top: 2.5px solid var(--accent); border-radius: 6px; padding: 6px 8px;
-    display: grid; grid-template-columns: 1fr 90px; gap: 8px; align-items: flex-start; background: #fff;
-}
-.inv-ttl { font-size: .64rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
-.inv-body { font-size: .65rem; line-height: 1.4; color: #334155; text-align: justify; }
-.inv-photo {
-    width: 90px; height: 75px; border: 1px dashed #cbd5e1; border-radius: 5px; background: #f1f5f9;
-    overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;
-}
+/* Invention story */
+.inv { border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; padding: 9px 11px; display: grid; grid-template-columns: 1fr 34mm; gap: 12px; align-items: start; background: rgba(255,255,255,.9); }
+.inv-body { font-size: .71rem; line-height: 1.55; color: #2f3b4e; text-align: justify; hyphens: auto; }
+.inv-photo { width: 34mm; height: 25mm; border: 1px solid var(--line); border-radius: 6px; background: #eef3f9; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
 .inv-photo img { width: 100%; height: 100%; object-fit: cover; }
-.inv-photo span { font-size: .54rem; color: #94a3b8; font-weight: 600; text-align: center; padding: 2px; }
+.inv-photo span { font-size: .58rem; color: #9aa8bb; font-weight: 600; text-align: center; padding: 2px; }
 
-/* FOOTER / SIGNATURE */
-.ftr {
-    border-top: 1px solid #e2e8f0; padding-top: 5px; display: flex; justify-content: space-between; align-items: flex-end; font-size: .62rem; color: #64748b;
-}
-.sig-box { text-align: right; }
-.sig-line { border-top: 1px solid #94a3b8; width: 130px; margin-top: 18px; margin-bottom: 2px; }
+/* Footer */
+.ftr { border-top: 2px solid var(--primary); padding-top: 7px; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: end; font-size: .66rem; color: var(--muted); }
+.ftr strong { color: var(--navy); }
+.ftr .sub { margin-top: 2px; }
+.sig-box { text-align: center; min-width: 52mm; }
+.sig-line { border-top: 1px solid #94a3b8; margin: 20px 0 3px; }
+.sig-box .nm { font-weight: 700; color: var(--navy); font-size: .7rem; }
 
-/* PRINT */
+/* ---------- PRINT ---------- */
 @media print {
-    body { background: #fff; padding: 0; }
-    .ctrl { display: none; }
-    .app { display: block; }
-    .preview { height: auto; overflow: visible; }
-    .sheet { box-shadow: none; border-radius: 0; width: 100%; padding: 8mm 12mm 8mm 22mm; }
-    @page { size: A4; margin: 0; }
+  body { background: #fff; padding: 0; }
+  .ctrl, .del-img-btn { display: none !important; }
+  .app { display: block; }
+  .preview { height: auto; overflow: visible; padding: 0; display: block; }
+  .sheet { box-shadow: none; border-radius: 0; width: 210mm; height: 297mm; min-height: 297mm; page-break-after: avoid; break-inside: avoid; }
+  .sheet::before { border-radius: 0; }
+  @page { size: A4; margin: 0; }
+}
+@media (max-width: 1100px) {
+  .app { grid-template-columns: 1fr; }
+  .ctrl, .preview { height: auto; }
+  .preview { overflow-x: auto; justify-content: flex-start; }
 }
 </style>
 </head>
 <body>
 
 <div class="app">
-    <!-- LEFT CONTROL PANEL -->
-    <div class="ctrl">
-        <h2>🤖 Robotics Report Builder</h2>
-         <a href="index.html">Switch to other format</a>
 
-        <div class="sec">School & Partner Logos</div>
-        <div class="r2">
-            <div class="fbox">
-                <label for="slIn">⬆ School Logo</label>
-                <input type="file" id="slIn" accept="image/*" onchange="loadLogo(event,'slImg','slTxt')">
-                <div class="btn-row">
-                    <button class="btn-sm" onclick="alignLogo('slBox','align-left')">L</button>
-                    <button class="btn-sm" onclick="alignLogo('slBox','align-center')">C</button>
-                    <button class="btn-sm" onclick="alignLogo('slBox','align-right')">R</button>
-                    <button class="btn-sm" onclick="removeLogo('slImg','slTxt','slIn')">Del</button>
-                </div>
-            </div>
-            <div class="fbox">
-                <label for="plIn">⬆ Partner Logo</label>
-                <input type="file" id="plIn" accept="image/*" onchange="loadLogo(event,'plImg','plTxt')">
-                <div class="btn-row">
-                    <button class="btn-sm" onclick="alignLogo('plBox','align-left')">L</button>
-                    <button class="btn-sm" onclick="alignLogo('plBox','align-center')">C</button>
-                    <button class="btn-sm" onclick="alignLogo('plBox','align-right')">R</button>
-                    <button class="btn-sm" onclick="removeLogo('plImg','plTxt','plIn')">Del</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="sec">Watermark / Buttermark</div>
-        <div class="fbox" style="margin-bottom:6px;">
-            <label for="wmIn">⬆ Upload Watermark Image</label>
-            <input type="file" id="wmIn" accept="image/*" onchange="loadWatermark(event)">
-            <button class="btn-sm" style="margin-top:4px;" onclick="removeWatermark()">Remove Watermark</button>
-        </div>
-        <div class="fg">
-            <label>Watermark Opacity</label>
-            <div class="sl-row">
-                <input type="range" id="wmOp" min="2" max="35" value="8" oninput="setWmOp(this.value)">
-                <span id="wmOpLbl">8%</span>
-            </div>
-        </div>
-
-        <div class="sec">Report Information</div>
-        <div class="fg"><label>Teacher / Coach Name</label><input type="text" id="iTeacher" value="Coach Marcus Vance" oninput="up()"></div>
-        <div class="r2">
-            <div class="fg"><label>Grade Name</label><input type="text" id="iGrade" value="Grade 7" oninput="up()"></div>
-            <div class="fg"><label>Division</label><input type="text" id="iDiv" value="Division B" oninput="up()"></div>
-        </div>
-        <div class="fg"><label>Project Name</label><input type="text" id="iProj" value="Autonomous Obstacle-Sensing Rover" oninput="up()"></div>
-        <div class="r2">
-            <div class="fg"><label>Time of Session</label><input type="text" id="iTime" value="Tue & Thu (2:00 PM)" oninput="up()"></div>
-            <div class="fg">
-                <label>Project Status</label>
-                <select id="iStatus" onchange="up()">
-                    <option value="Completed" selected>Completed</option>
-                    <option value="In Progress">In Progress</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="sec">4 Student Action Photos</div>
-        <div class="r2">
-            <div class="fbox"><label for="ai1">⬆ Photo 1</label><input type="file" id="ai1" accept="image/*" onchange="loadAct(event,'aImg1','aTxt1')"><small>Design Phase</small></div>
-            <div class="fbox"><label for="ai2">⬆ Photo 2</label><input type="file" id="ai2" accept="image/*" onchange="loadAct(event,'aImg2','aTxt2')"><small>Assembly</small></div>
-        </div>
-        <div class="r2" style="margin-top:6px;">
-            <div class="fbox"><label for="ai3">⬆ Photo 3</label><input type="file" id="ai3" accept="image/*" onchange="loadAct(event,'aImg3','aTxt3')"><small>Coding</small></div>
-            <div class="fbox"><label for="ai4">⬆ Photo 4</label><input type="file" id="ai4" accept="image/*" onchange="loadAct(event,'aImg4','aTxt4')"><small>Testing</small></div>
-        </div>
-
-        <div class="sec">Learning Outcomes & Real-World Connect (10+ Lines)</div>
-        <div class="fg">
-            <label>Learning Outcome (Detailed 10 lines)</label>
-            <textarea id="iLO" rows="4" oninput="up()">During this monthly robotics module, students mastered core engineering principles including ultrasonic echolocation, H-bridge motor driver wiring, and closed-loop feedback programming. Students successfully calculated optimal gear ratios, translated spatial coordinates into conditional logic statements, and debugged sensor false-positive anomalies. Through collaborative squad building, team members refined their spatial reasoning, cultivated rigorous hardware troubleshooting methodologies, and acquired advanced proficiency in modular sensor integration and autonomous navigation algorithms.</textarea>
-        </div>
-        <div class="fg">
-            <label>Real-World Connect (Detailed 10 lines)</label>
-            <textarea id="iRWA" rows="4" oninput="up()">The autonomous rover architecture engineered in class directly mirrors modern industrial automation and commercial automated guided vehicles (AGVs) deployed in smart warehouses like Amazon Robotics. By programming obstacle-avoidance routines using proximity sensors, students experienced the exact foundational engineering logic utilized in autonomous delivery drones, planetary exploration rovers operated by NASA JPL, and driverless automotive collision-avoidance systems. This active bridge between classroom theory and commercial robotics fosters deep technological literacy for future engineering careers.</textarea>
-        </div>
-
-        <div class="sec">Current Invention Story & Photo</div>
-        <div class="fg"><label>Invention Story Headline / Content</label><textarea id="iInv" rows="3" oninput="up()">Recent Breakthrough: Soft-bodied pneumatic micro-robots inspired by marine cephalopods are transforming subterranean pipeline inspection and delicate medical surgery. These flexible actuators adapt dynamically to irregular geometries without rigid mechanical joints, opening unprecedented frontiers in adaptive automation.</textarea></div>
-        <div class="fbox">
-            <label for="invIn">⬆ Upload Invention Photo</label>
-            <input type="file" id="invIn" accept="image/*" onchange="loadInv(event)">
-        </div>
-
-        <div class="actions">
-            <button class="btn btn-p" onclick="window.print()">Print / Save as PDF</button>
-            <button class="btn btn-s" onclick="location.reload()">Reset Form</button>
-        </div>
+  <!-- LEFT: CONTROL PANEL -->
+  <div class="ctrl">
+    <div class="ctrl-head">
+      <h2>🤖 Robotics Report Builder</h2>
+      <a href="index.html">Switch to other format</a>
     </div>
+    <div class="ctrl-body">
 
-    <!-- RIGHT A4 PREVIEW -->
-    <div class="preview">
-        <div class="sheet" id="printSheet">
-            <!-- Watermark Layer -->
-            <div id="wmLayer"><img id="wmImg" src="" style="display:none;"></div>
-
-            <!-- Puncture / Binding Guidelines -->
-            <div class="ph ph1"></div><div class="ph ph2"></div><div class="ph ph3"></div>
-
-            <!-- HEADER -->
-            <div class="hdr">
-                <div class="logo-box align-center" id="slBox">
-                    <img id="slImg" src="" style="display:none;">
-                    <span id="slTxt">School Logo</span>
-                </div>
-                <div class="hc">
-                    <h1 id="outProj">Autonomous Obstacle-Sensing Rover</h1>
-                    <p>Monthly Robotics Performance & Curriculum Report</p>
-                </div>
-                <div class="logo-box align-center" id="plBox">
-                    <img id="plImg" src="" style="display:none;">
-                    <span id="plTxt">Partner Logo</span>
-                </div>
-            </div>
-
-            <!-- METADATA STRIP -->
-            <div class="meta">
-                <div class="mi">
-                    <div class="ml">Teacher Name</div>
-                    <div class="mv" id="outTeacher">Coach Marcus Vance</div>
-                </div>
-                <div class="mi">
-                    <div class="ml">Grade & Division</div>
-                    <div class="mv"><span id="outGrade">Grade 7</span> - <span id="outDiv">Division B</span></div>
-                </div>
-                <div class="mi">
-                    <div class="ml">Session Timing</div>
-                    <div class="mv" id="outTime">Tue & Thu (2:00 PM)</div>
-                </div>
-                <div class="mi">
-                    <div class="ml">Project Status</div>
-                    <div class="mv"><span id="outStatus" class="pill p-done">Completed</span></div>
-                </div>
-            </div>
-
-            <!-- 4 STUDENT ACTION IMAGES -->
-            <div class="img-grid">
-                <div class="img-card"><img id="aImg1" src="" style="display:none;"><span id="aTxt1">1. Design Phase</span><button class="del-img-btn" onclick="clearImg('aImg1','aTxt1')">×</button></div>
-                <div class="img-card"><img id="aImg2" src="" style="display:none;"><span id="aTxt2">2. Assembly</span><button class="del-img-btn" onclick="clearImg('aImg2','aTxt2')">×</button></div>
-                <div class="img-card"><img id="aImg3" src="" style="display:none;"><span id="aTxt3">3. Coding</span><button class="del-img-btn" onclick="clearImg('aImg3','aTxt3')">×</button></div>
-                <div class="img-card"><img id="aImg4" src="" style="display:none;"><span id="aTxt4">4. Testing</span><button class="del-img-btn" onclick="clearImg('aImg4','aTxt4')">×</button></div>
-            </div>
-
-            <!-- DUAL NARRATIVE BLOCK (Learning Outcomes & Real-World Connect) -->
-            <div class="dual">
-                <div class="nb lo">
-                    <div class="nb-ttl lo-c">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Learning Outcomes
-                    </div>
-                    <div class="nb-body" id="outLO"></div>
-                </div>
-                <div class="nb rwa">
-                    <div class="nb-ttl rwa-c">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
-                        Real-World Connect
-                    </div>
-                    <div class="nb-body" id="outRWA"></div>
-                </div>
-            </div>
-
-            <!-- CURRENT INVENTION STORY WITH PHOTO ASIDE -->
-            <div class="inv">
-                <div class="inv-content">
-                    <div class="inv-ttl">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        Current Invention Story & Global Innovation
-                    </div>
-                    <div class="inv-body" id="outInv"></div>
-                </div>
-                <div class="inv-photo">
-                    <img id="invImg" src="" style="display:none;">
-                    <span id="invTxt">Invention Photo</span>
-                    <button class="del-img-btn" onclick="clearInvImg()">×</button>
-                </div>
-            </div>
-
-            <!-- FOOTER / SIGNATURE -->
-            <div class="ftr">
-                <div><strong>Robotics Academy STEM Program</strong> | Evaluation Report</div>
-                <div class="sig-box">
-                    <div class="sig-line"></div>
-                    <div>Teacher Signature (<span id="outSigTeacher">Coach Marcus Vance</span>)</div>
-                </div>
-            </div>
-
+      <div class="sec">Watermark</div>
+      <div class="fbox" style="margin-bottom:8px;">
+        <label for="wmIn">⬆ Upload Watermark Image</label>
+        <input type="file" id="wmIn" accept="image/*" onchange="loadWatermark(event)">
+        <button class="btn-sm" style="margin-top:6px; width:100%;" onclick="removeWatermark()">Remove Watermark</button>
+      </div>
+      <div class="fg">
+        <label>Watermark Opacity</label>
+        <div class="sl-row">
+          <input type="range" id="wmOp" min="2" max="35" value="8" oninput="setWmOp(this.value)">
+          <span id="wmOpLbl">8%</span>
         </div>
+      </div>
+
+      <div class="sec">Report Information</div>
+      <div class="fg"><label>Teacher / Coach Name</label><input type="text" id="iTeacher" value="Coach Marcus Vance" oninput="up()"></div>
+      <div class="fg"><label>School / Program Name</label><input type="text" id="iSchool" value="Robotics Academy STEM Program" oninput="up()"></div>
+      <div class="r2">
+        <div class="fg"><label>Grade Name</label><input type="text" id="iGrade" value="Grade 7" oninput="up()"></div>
+        <div class="fg"><label>Division</label><input type="text" id="iDiv" value="Division B" oninput="up()"></div>
+      </div>
+      <div class="fg"><label>Project Name</label><input type="text" id="iProj" value="Autonomous Obstacle-Sensing Rover" oninput="up()"></div>
+      <div class="r2">
+        <div class="fg"><label>Reporting Month</label><input type="text" id="iMonth" value="November 2026" oninput="up()"></div>
+        <div class="fg"><label>Time of Session</label><input type="text" id="iTime" value="Tue & Thu (2:00 PM)" oninput="up()"></div>
+      </div>
+      <div class="fg">
+        <label>Project Status</label>
+        <select id="iStatus" onchange="up()">
+          <option value="Completed" selected>Completed</option>
+          <option value="In Progress">In Progress</option>
+        </select>
+      </div>
+
+      <div class="sec">4 Student Action Photos</div>
+      <div class="r2">
+        <div class="fbox"><label for="ai1">⬆ Photo 1</label><input type="file" id="ai1" accept="image/*" onchange="loadAct(event,'aImg1','aTxt1')"><small>Design Phase</small></div>
+        <div class="fbox"><label for="ai2">⬆ Photo 2</label><input type="file" id="ai2" accept="image/*" onchange="loadAct(event,'aImg2','aTxt2')"><small>Assembly</small></div>
+      </div>
+      <div class="r2" style="margin-top:8px;">
+        <div class="fbox"><label for="ai3">⬆ Photo 3</label><input type="file" id="ai3" accept="image/*" onchange="loadAct(event,'aImg3','aTxt3')"><small>Coding</small></div>
+        <div class="fbox"><label for="ai4">⬆ Photo 4</label><input type="file" id="ai4" accept="image/*" onchange="loadAct(event,'aImg4','aTxt4')"><small>Testing</small></div>
+      </div>
+
+      <div class="sec">Learning Outcomes & Real-World Connect</div>
+      <div class="fg">
+        <label>Learning Outcomes</label>
+        <textarea id="iLO" rows="5" oninput="up()">During this monthly robotics module, students mastered core engineering principles including ultrasonic echolocation, H-bridge motor driver wiring, and closed-loop feedback programming. Students successfully calculated optimal gear ratios, translated spatial coordinates into conditional logic statements, and debugged sensor false-positive anomalies. Through collaborative squad building, team members refined their spatial reasoning, cultivated rigorous hardware troubleshooting methodologies, and acquired advanced proficiency in modular sensor integration and autonomous navigation algorithms.</textarea>
+      </div>
+      <div class="fg">
+        <label>Real-World Connect</label>
+        <textarea id="iRWA" rows="5" oninput="up()">The autonomous rover architecture engineered in class directly mirrors modern industrial automation and commercial automated guided vehicles (AGVs) deployed in smart warehouses like Amazon Robotics. By programming obstacle-avoidance routines using proximity sensors, students experienced the exact foundational engineering logic utilized in autonomous delivery drones, planetary exploration rovers operated by NASA JPL, and driverless automotive collision-avoidance systems. This active bridge between classroom theory and commercial robotics fosters deep technological literacy for future engineering careers.</textarea>
+      </div>
+
+      <div class="sec">Current Invention Story & Photo</div>
+      <div class="fg"><label>Invention Story</label><textarea id="iInv" rows="4" oninput="up()">Recent Breakthrough: Soft-bodied pneumatic micro-robots inspired by marine cephalopods are transforming subterranean pipeline inspection and delicate medical surgery. These flexible actuators adapt dynamically to irregular geometries without rigid mechanical joints, opening unprecedented frontiers in adaptive automation.</textarea></div>
+      <div class="fbox">
+        <label for="invIn">⬆ Upload Invention Photo</label>
+        <input type="file" id="invIn" accept="image/*" onchange="loadInv(event)">
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-p" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn btn-s" onclick="location.reload()">Reset Form</button>
+      </div>
     </div>
+  </div>
+
+  <!-- RIGHT: A4 PREVIEW -->
+  <div class="preview">
+    <div class="sheet" id="printSheet">
+
+      <div id="wmLayer"><img id="wmImg" src="" alt="" style="display:none;"></div>
+      <div class="frame"></div>
+      <div class="ph ph1"></div><div class="ph ph2"></div><div class="ph ph3"></div>
+
+      <!-- HEADER -->
+      <div class="hdr">
+        <div class="hc">
+          <div class="kicker">Monthly Robotics Performance Report</div>
+          <h1 id="outProj">Autonomous Obstacle-Sensing Rover</h1>
+          <p>Curriculum Progress & Student Achievement Summary</p>
+        </div>
+      </div>
+
+      <!-- META STRIP -->
+      <div class="meta">
+        <div class="mi"><div class="ml">Teacher</div><div class="mv" id="outTeacher">Coach Marcus Vance</div></div>
+        <div class="mi"><div class="ml">Grade & Division</div><div class="mv"><span id="outGrade">Grade 7</span> – <span id="outDiv">Division B</span></div></div>
+        <div class="mi"><div class="ml">Session Timing</div><div class="mv" id="outTime">Tue & Thu (2:00 PM)</div></div>
+        <div class="mi"><div class="ml">Project Status</div><div class="mv"><span id="outStatus" class="pill p-done">Completed</span></div></div>
+      </div>
+
+      <!-- PHOTOS -->
+      <div>
+        <div class="sh">
+          <span class="chip c0"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/></svg></span>
+          Class in Action
+        </div>
+        <div class="img-grid">
+          <figure class="fig"><div class="img-card"><img id="aImg1" src="" alt="" style="display:none;"><span id="aTxt1">Photo 1</span><button class="del-img-btn" onclick="clearImg('aImg1','aTxt1')">×</button></div><figcaption>1. Design Phase</figcaption></figure>
+          <figure class="fig"><div class="img-card"><img id="aImg2" src="" alt="" style="display:none;"><span id="aTxt2">Photo 2</span><button class="del-img-btn" onclick="clearImg('aImg2','aTxt2')">×</button></div><figcaption>2. Assembly</figcaption></figure>
+          <figure class="fig"><div class="img-card"><img id="aImg3" src="" alt="" style="display:none;"><span id="aTxt3">Photo 3</span><button class="del-img-btn" onclick="clearImg('aImg3','aTxt3')">×</button></div><figcaption>3. Coding</figcaption></figure>
+          <figure class="fig"><div class="img-card"><img id="aImg4" src="" alt="" style="display:none;"><span id="aTxt4">Photo 4</span><button class="del-img-btn" onclick="clearImg('aImg4','aTxt4')">×</button></div><figcaption>4. Testing</figcaption></figure>
+        </div>
+      </div>
+
+      <!-- LEARNING OUTCOMES & REAL-WORLD CONNECT -->
+      <div class="dual">
+        <div class="nb lo">
+          <div class="sh">
+            <span class="chip c1"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Learning Outcomes
+          </div>
+          <div class="nb-body" id="outLO"></div>
+        </div>
+        <div class="nb rwa">
+          <div class="sh">
+            <span class="chip c2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+            Real-World Connect
+          </div>
+          <div class="nb-body" id="outRWA"></div>
+        </div>
+      </div>
+
+      <!-- INVENTION STORY -->
+      <div class="inv">
+        <div>
+          <div class="sh">
+            <span class="chip c3"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
+            Current Invention Story
+          </div>
+          <div class="inv-body" id="outInv"></div>
+        </div>
+        <div class="inv-photo">
+          <img id="invImg" src="" alt="" style="display:none;">
+          <span id="invTxt">Invention Photo</span>
+          <button class="del-img-btn" onclick="clearInvImg()">×</button>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="ftr">
+        <div>
+          <div><strong id="outSchool">Robotics Academy STEM Program</strong> | Monthly Evaluation Report</div>
+          <div class="sub">Reporting period: <span id="outMonth">November 2026</span> &nbsp;•&nbsp; Issued: <span id="outDate"></span></div>
+        </div>
+        <div class="sig-box">
+          <div class="sig-line"></div>
+          <div class="nm" id="outSigTeacher">Coach Marcus Vance</div>
+          <div>Teacher Signature</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>
+function $(id) { return document.getElementById(id); }
+
 function up() {
-    document.getElementById('outTeacher').innerText = document.getElementById('iTeacher').value || '—';
-    document.getElementById('outSigTeacher').innerText = document.getElementById('iTeacher').value || '—';
-    document.getElementById('outGrade').innerText = document.getElementById('iGrade').value || '—';
-    document.getElementById('outDiv').innerText = document.getElementById('iDiv').value || '—';
-    document.getElementById('outProj').innerText = document.getElementById('iProj').value || 'Robotics Report';
-    document.getElementById('outTime').innerText = document.getElementById('iTime').value || '—';
-    
-    document.getElementById('outLO').innerText = document.getElementById('iLO').value;
-    document.getElementById('outRWA').innerText = document.getElementById('iRWA').value;
-    document.getElementById('outInv').innerText = document.getElementById('iInv').value;
+  $('outTeacher').innerText = $('iTeacher').value || '—';
+  $('outSigTeacher').innerText = $('iTeacher').value || '—';
+  $('outSchool').innerText = $('iSchool').value || 'Robotics Program';
+  $('outGrade').innerText = $('iGrade').value || '—';
+  $('outDiv').innerText = $('iDiv').value || '—';
+  $('outProj').innerText = $('iProj').value || 'Robotics Report';
+  $('outMonth').innerText = $('iMonth').value || '—';
+  $('outTime').innerText = $('iTime').value || '—';
+  $('outLO').innerText = $('iLO').value;
+  $('outRWA').innerText = $('iRWA').value;
+  $('outInv').innerText = $('iInv').value;
 
-    const status = document.getElementById('iStatus').value;
-    const stEl = document.getElementById('outStatus');
-    stEl.innerText = status;
-    stEl.className = status === 'Completed' ? 'pill p-done' : 'pill p-prog';
+  const status = $('iStatus').value;
+  const stEl = $('outStatus');
+  stEl.innerText = status;
+  stEl.className = status === 'Completed' ? 'pill p-done' : 'pill p-prog';
 }
 
-function loadLogo(e, imgId, txtId) {
-    const file = e.target.files[0];
-    if(file){
-        const r = new FileReader();
-        r.onload = function(evt) {
-            const img = document.getElementById(imgId);
-            img.src = evt.target.result;
-            img.style.display = 'block';
-            document.getElementById(txtId).style.display = 'none';
-        }
-        r.readAsDataURL(file);
-    }
+function readImage(e, cb) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = function (evt) { cb(evt.target.result); };
+  r.readAsDataURL(file);
 }
 
-function removeLogo(imgId, txtId, inputId) {
-    document.getElementById(imgId).src = '';
-    document.getElementById(imgId).style.display = 'none';
-    document.getElementById(txtId).style.display = 'block';
-    document.getElementById(inputId).value = '';
+function showImg(imgId, txtId, src) {
+  const img = $(imgId);
+  img.src = src;
+  img.style.display = 'block';
+  $(txtId).style.display = 'none';
 }
-
-function alignLogo(boxId, alignmentClass) {
-    const box = document.getElementById(boxId);
-    box.className = 'logo-box ' + alignmentClass;
+function hideImg(imgId, txtId) {
+  const img = $(imgId);
+  img.removeAttribute('src');
+  img.style.display = 'none';
+  $(txtId).style.display = 'block';
 }
 
 function loadWatermark(e) {
-    const file = e.target.files[0];
-    if(file){
-        const r = new FileReader();
-        r.onload = function(evt) {
-            const img = document.getElementById('wmImg');
-            img.src = evt.target.result;
-            img.style.display = 'block';
-        }
-        r.readAsDataURL(file);
-    }
+  readImage(e, src => { const i = $('wmImg'); i.src = src; i.style.display = 'block'; });
 }
-
 function removeWatermark() {
-    const img = document.getElementById('wmImg');
-    img.src = '';
-    img.style.display = 'none';
-    document.getElementById('wmIn').value = '';
+  const i = $('wmImg'); i.removeAttribute('src'); i.style.display = 'none'; $('wmIn').value = '';
 }
-
 function setWmOp(val) {
-    document.getElementById('wmOpLbl.innerText') = val + '%';
-    document.getElementById('wmOpLbl').innerText = val + '%';
-    document.getElementById('wmImg').style.opacity = val / 100;
+  $('wmOpLbl').innerText = val + '%';
+  $('wmImg').style.opacity = val / 100;
 }
 
-function loadAct(e, imgId, txtId) {
-    const file = e.target.files[0];
-    if(file){
-        const r = new FileReader();
-        r.onload = function(evt) {
-            const img = document.getElementById(imgId);
-            img.src = evt.target.result;
-            img.style.display = 'block';
-            document.getElementById(txtId).style.display = 'none';
-        }
-        r.readAsDataURL(file);
-    }
-}
+function loadAct(e, imgId, txtId) { readImage(e, src => showImg(imgId, txtId, src)); }
+function clearImg(imgId, txtId) { hideImg(imgId, txtId); }
 
-function clearImg(imgId, txtId) {
-    document.getElementById(imgId).src = '';
-    document.getElementById(imgId).style.display = 'none';
-    document.getElementById(txtId).style.display = 'block';
-}
+function loadInv(e) { readImage(e, src => showImg('invImg', 'invTxt', src)); }
+function clearInvImg() { hideImg('invImg', 'invTxt'); $('invIn').value = ''; }
 
-function loadInv(e) {
-    const file = e.target.files[0];
-    if(file){
-        const r = new FileReader();
-        r.onload = function(evt) {
-            const img = document.getElementById('invImg');
-            img.src = evt.target.result;
-            img.style.display = 'block';
-            document.getElementById('invTxt').style.display = 'none';
-        }
-        r.readAsDataURL(file);
-    }
-}
-
-function clearInvImg() {
-    document.getElementById('invImg').src = '';
-    document.getElementById('invImg').style.display = 'none';
-    document.getElementById('invTxt').style.display = 'block';
-    document.getElementById('invIn').value = '';
-}
-
-// Initial Population
+// Initial population
+$('outDate').innerText = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 up();
 </script>
 
