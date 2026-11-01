@@ -103,7 +103,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 .hc p { font-size: .74rem; color: #475569; font-weight: 500; margin-top: 3px; }
 
 /* Meta strip */
-.meta { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--soft); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.meta { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--soft); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .mi { padding: 7px 11px; border-right: 1px solid var(--line); }
 .mi:last-child { border-right: none; }
 .mi .ml { font-size: .6rem; color: var(--muted); font-weight: 600; letter-spacing: .3px; }
@@ -266,7 +266,6 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 
       <!-- META STRIP -->
       <div class="meta">
-        <div class="mi"><div class="ml">Teacher</div><div class="mv" id="outTeacher">Coach Marcus Vance</div></div>
         <div class="mi"><div class="ml">Grade & Division</div><div class="mv"><span id="outGrade">Grade 7</span> – <span id="outDiv">Division B</span></div></div>
         <div class="mi"><div class="ml">Session Timing</div><div class="mv" id="outTime">Tue & Thu (2:00 PM)</div></div>
         <div class="mi"><div class="ml">Project Status</div><div class="mv"><span id="outStatus" class="pill p-done">Completed</span></div></div>
@@ -341,7 +340,6 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 function $(id) { return document.getElementById(id); }
 
 function up() {
-  $('outTeacher').innerText = $('iTeacher').value || '—';
   $('outSigTeacher').innerText = $('iTeacher').value || '—';
   $('outSchool').innerText = $('iSchool').value || 'Robotics Program';
   $('outGrade').innerText = $('iGrade').value || '—';
