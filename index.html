@@ -1,235 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Monthly Report</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #1e3a8a;
-      --accent: #0284c7;
-      --text: #0f172a;
-      --border: #cbd5e1;
-      --bg: #f1f5f9;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robotics Monthly Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #14296b;
+  --primary: #1e3a8a;
+  --accent: #0284c7;
+  --teal: #0e7490;
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: #dbe3ee;
+  --soft: #f5f8fc;
+  --bg: #eaf0f7;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 16px; -webkit-font-smoothing: antialiased; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+/* ---------- APP LAYOUT ---------- */
+.app-container { display: grid; grid-template-columns: 440px 1fr; gap: 20px; max-width: 1700px; margin: 0 auto; }
 
-    .app-container {
-      display: grid;
-      grid-template-columns: 460px 1fr;
-      gap: 24px;
-      max-width: 1650px;
-      margin: 0 auto;
-    }
+/* ---------- CONTROL PANEL ---------- */
+.form-panel { background: #fff; border-radius: 14px; box-shadow: 0 4px 18px rgba(20,41,107,.08); height: calc(100vh - 32px); overflow-y: auto; }
+.panel-head { position: sticky; top: 0; z-index: 5; background: linear-gradient(135deg, var(--navy), var(--accent)); color: #fff; padding: 16px 20px; }
+.panel-head h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: .2px; }
+.panel-head a { display: inline-block; margin-top: 4px; font-size: .74rem; color: #cfe8fb; text-decoration: none; border-bottom: 1px dotted #cfe8fb; }
+.panel-head a:hover { color: #fff; }
+.panel-body { padding: 6px 20px 20px; }
 
-    /* LEFT CONTROLS PANEL */
-    .form-panel {
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      height: calc(100vh - 40px);
-      overflow-y: auto;
-    }
-    .form-panel h2 { font-size: 1.2rem; color: var(--primary); margin-bottom: 14px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
-    .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin: 14px 0 8px; letter-spacing: 0.5px; }
-    .form-group { margin-bottom: 11px; }
-    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: #334155; margin-bottom: 4px; }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 0.85rem;
-    }
-    .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.4; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.section-title { display: flex; align-items: center; gap: 8px; font-size: .72rem; font-weight: 700; color: var(--primary); margin: 18px 0 9px; padding-bottom: 5px; border-bottom: 1px solid var(--line); letter-spacing: .3px; text-transform: uppercase; }
+.section-title::before { content: ""; width: 4px; height: 12px; border-radius: 2px; background: var(--accent); }
 
-    .file-input-box {
-      border: 1px dashed var(--border);
-      padding: 8px;
-      border-radius: 6px;
-      background: #f8fafc;
-      text-align: center;
-      font-size: 0.75rem;
-    }
-    .file-input-box input { display: none; }
-    .file-input-box label { cursor: pointer; color: var(--accent); font-weight: 600; display: block; }
+.form-group { margin-bottom: 9px; }
+.form-group label { display: block; font-size: .74rem; font-weight: 600; color: #334155; margin-bottom: 3px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; font-family: inherit; font-size: .82rem; color: var(--text); background: #fff; transition: border-color .15s, box-shadow .15s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(2,132,199,.15); }
+.form-group textarea { resize: vertical; min-height: 78px; line-height: 1.45; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
 
-    .actions { display: flex; gap: 10px; margin-top: 18px; }
-    .btn { flex: 1; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none; font-size: 0.85rem; }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-secondary { background: #e2e8f0; color: #334155; }
+.file-input-box { border: 1.5px dashed #b9c6d8; padding: 9px 6px; border-radius: 8px; background: var(--soft); text-align: center; transition: background .15s, border-color .15s; }
+.file-input-box:hover { background: #edf4fb; border-color: var(--accent); }
+.file-input-box input[type="file"] { display: none; }
+.file-input-box label { cursor: pointer; color: var(--accent); font-weight: 600; font-size: .74rem; display: block; }
 
-    /* RIGHT A4 PREVIEW */
-    .preview-panel {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: calc(100vh - 40px);
-      overflow-y: auto;
-    }
+.sl-row { display: flex; align-items: center; gap: 10px; }
+.sl-row input[type="range"] { flex: 1; accent-color: var(--accent); padding: 0; }
+.sl-row span { font-size: .76rem; font-weight: 700; color: var(--primary); min-width: 34px; text-align: right; }
+.btn-sm { width: 100%; margin-top: 6px; padding: 5px 0; font-size: .68rem; font-weight: 600; cursor: pointer; border: 1px solid var(--line); background: #fff; border-radius: 5px; color: #334155; font-family: inherit; }
+.btn-sm:hover { background: #e2e8f0; }
 
-    .sheet {
-      background: white;
-      width: 210mm;
-      min-height: 297mm;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      /* Margins: Left margin includes 26mm for hole-punch gutter */
-      padding: 14mm 16mm 14mm 26mm;
-    }
+.actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn { flex: 1; padding: 11px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: .84rem; font-family: inherit; transition: transform .1s, opacity .15s; }
+.btn:hover { opacity: .9; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-secondary { background: #e2e8f0; color: #334155; }
 
-    /* PUNCH HOLE GUIDES */
-    .punch-guide {
-      position: absolute;
-      left: 8mm;
-      width: 6mm;
-      height: 6mm;
-      border: 1px dashed #cbd5e1;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .punch-top { top: 70mm; }
-    .punch-mid { top: 148.5mm; }
-    .punch-bottom { bottom: 70mm; }
+/* ---------- A4 PREVIEW ---------- */
+.preview-panel { display: flex; justify-content: center; align-items: flex-start; height: calc(100vh - 32px); overflow-y: auto; padding-bottom: 20px; }
 
-    /* HEADER & DUAL LOGOS */
-    .report-header {
-      display: grid;
-      grid-template-columns: 85px 1fr 85px;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 10px;
-      margin-bottom: 12px;
-    }
-    .logo-slot {
-      width: 85px;
-      height: 55px;
-      border: 1px dashed #cbd5e1;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: #fafafa;
-    }
-    .logo-slot img { max-width: 100%; max-height: 100%; object-fit: contain; }
-    .logo-slot span { font-size: 0.62rem; color: #94a3b8; text-align: center; font-weight: 600; padding: 2px; }
+.sheet {
+  background: #fff;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 13mm 12mm 11mm 25mm;   /* wide left gutter for binding holes */
+  box-shadow: 0 10px 34px rgba(20,41,107,.18);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  position: relative;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
 
-    .header-center { text-align: center; }
-    .header-center h1 { font-size: 1.25rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-    .header-center h2 { font-size: 0.85rem; color: #475569; font-weight: 600; margin-top: 2px; }
+/* Top brand bar and page frame */
+.sheet::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5mm; background: linear-gradient(90deg, var(--navy), var(--primary) 55%, var(--accent)); border-radius: 3px 3px 0 0; z-index: 2; }
+.frame { position: absolute; top: 8mm; right: 6mm; bottom: 6mm; left: 18mm; border: 0.6pt solid #cfd9e6; border-radius: 2px; pointer-events: none; z-index: 2; }
 
-    /* METADATA BAR */
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 8px 12px;
-      margin-bottom: 12px;
-    }
-    .meta-item .m-lbl { font-size: 0.65rem; text-transform: uppercase; color: #64748b; font-weight: 700; }
-    .meta-item .m-val { font-size: 0.85rem; font-weight: 600; color: #0f172a; }
+/* Watermark (only visible after upload) */
+.watermark { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; pointer-events: none; z-index: 0; overflow: hidden; border-radius: 3px; }
+.watermark img { width: 62%; max-height: 70%; transform: rotate(-32deg); object-fit: contain; filter: grayscale(50%); opacity: .08; }
+.sheet > *:not(.watermark):not(.punch-guide):not(.frame) { position: relative; z-index: 1; }
 
-    /* STATUS BADGE */
-    .status-pill {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    .status-completed { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-    .status-inprogress { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+/* Punch hole guides */
+.punch-guide { position: absolute; left: 7mm; width: 5.5mm; height: 5.5mm; border: 1px dashed #b7c3d2; border-radius: 50%; z-index: 2; pointer-events: none; }
+.punch-top { top: 60mm; } .punch-mid { top: 148mm; } .punch-bottom { bottom: 60mm; }
 
-    /* 4 IMAGES */
-    .images-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .img-box {
-      aspect-ratio: 4 / 3;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      background: #f8fafc;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .img-box img { width: 100%; height: 100%; object-fit: cover; }
-    .img-box span { font-size: 0.68rem; color: #94a3b8; font-weight: 600; }
+/* Header */
+.report-header { text-align: center; padding: 4mm 4mm 9px; border-bottom: 2px solid var(--primary); }
+.report-header .kicker { font-size: .62rem; font-weight: 600; color: var(--accent); letter-spacing: 1.6px; text-transform: uppercase; }
+.report-header h1 { font-size: 1.28rem; color: var(--navy); font-weight: 800; line-height: 1.2; margin-top: 3px; }
+.report-header p { font-size: .74rem; color: #475569; font-weight: 500; margin-top: 3px; }
 
-    /* 3 PARAGRAPH STORY */
-    .story-section { flex: 1; }
-    .story-title { font-size: 0.85rem; color: var(--primary); font-weight: 700; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; padding-bottom: 3px; margin-bottom: 8px; }
-    .story-block { margin-bottom: 9px; }
-    .story-block h4 { font-size: 0.78rem; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 2px; }
-    .story-block p { font-size: 0.76rem; line-height: 1.48; color: #334155; text-align: justify; }
+/* Meta strip */
+.meta-grid { display: grid; grid-template-columns: 1fr 1.15fr 1.3fr .8fr; background: var(--soft); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.meta-item { padding: 7px 11px; border-right: 1px solid var(--line); }
+.meta-item:last-child { border-right: none; }
+.m-lbl { font-size: .6rem; color: var(--muted); font-weight: 600; letter-spacing: .3px; }
+.m-val { font-size: .8rem; font-weight: 700; color: var(--navy); margin-top: 2px; }
+.m-val small { font-weight: 600; color: var(--muted); font-size: .68rem; }
+.meter { height: 4px; background: #dfe8f3; border-radius: 3px; margin-top: 4px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--teal)); border-radius: 3px; }
 
-    /* INVENTION STORY PREVIEW SECTION (SIDE-BY-SIDE LAYOUT) */
-    .invention-preview-block {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid #e2e8f0;
-      display: none;
-    }
-    .invention-content-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 180px;
-      gap: 12px;
-      align-items: start;
-    }
-    .invention-preview-block h4 { font-size: 0.78rem; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 2px; }
-    .invention-preview-block p { font-size: 0.76rem; line-height: 1.48; color: #334155; text-align: justify; }
-    .invention-preview-img-container {
-      width: 180px;
-      height: 120px;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      overflow: hidden;
-      background: #f8fafc;
-      display: none;
-    }
-    .invention-preview-img-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.status-pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .65rem; font-weight: 700; }
+.status-completed { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.status-inprogress { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
 
-    /* FOOTER */
-    .report-footer {
-      border-top: 1px solid #e2e8f0;
-      padding-top: 8px;
-      margin-top: 8px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.7rem;
-      color: #64748b;
-    }
+/* Section headings */
+.sh { display: flex; align-items: center; gap: 7px; font-size: .78rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+.sh .chip { width: 17px; height: 17px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; background: var(--navy); }
+.sh .chip.c3 { background: var(--accent); }
+.sh::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 
-    /* PRINT LAYOUT */
-    @media print {
-      body { background: white; padding: 0; }
-      .form-panel { display: none; }
-      .app-container { display: block; }
-      .preview-panel { height: auto; overflow: visible; }
-      .sheet {
-        box-shadow: none; border-radius: 0; width: 100%; height: 100%;
-        padding: 12mm 14mm 12mm 24mm;
-      }
-      .punch-guide { border-color: #cbd5e1 !important; }
-      @page { size: A4; margin: 0; }
-    }
-  </style>
+/* Photo gallery */
+.images-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.fig { display: flex; flex-direction: column; gap: 3px; }
+.img-box { aspect-ratio: 4/3; border: 1px solid var(--line); border-radius: 6px; background: #eef3f9; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
+.img-box img { width: 100%; height: 100%; object-fit: cover; }
+.img-box span { font-size: .62rem; color: #9aa8bb; font-weight: 600; }
+.fig figcaption { font-size: .62rem; color: var(--muted); font-weight: 600; text-align: center; }
+
+/* Story */
+.story-section { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.story-block { border: 1px solid var(--line); border-left: 3px solid var(--primary); border-radius: 8px; padding: 8px 12px; background: rgba(245,248,252,.85); flex: 1; }
+.story-block:nth-of-type(2) { border-left-color: var(--accent); }
+.story-block:nth-of-type(3) { border-left-color: var(--teal); }
+.story-block h4 { font-size: .74rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.story-block p { font-size: .72rem; line-height: 1.55; color: #2f3b4e; text-align: justify; hyphens: auto; }
+
+/* Invention story */
+.invention-preview-block { border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; padding: 9px 12px; background: rgba(255,255,255,.9); display: none; }
+.invention-content-wrapper { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; }
+.invention-content-wrapper.has-photo { grid-template-columns: 1fr 38mm; }
+.invention-preview-block h4 { font-size: .74rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.invention-preview-block p { font-size: .72rem; line-height: 1.55; color: #2f3b4e; text-align: justify; hyphens: auto; }
+.invention-preview-img-container { width: 38mm; height: 28mm; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #eef3f9; display: none; }
+.invention-preview-img-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Footer */
+.report-footer { border-top: 2px solid var(--primary); padding-top: 7px; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: end; font-size: .66rem; color: var(--muted); }
+.report-footer strong { color: var(--navy); }
+.report-footer .sub { margin-top: 2px; }
+.sig-box { text-align: center; min-width: 52mm; }
+.sig-line { border-top: 1px solid #94a3b8; margin: 20px 0 3px; }
+.sig-box .nm { font-weight: 700; color: var(--navy); font-size: .7rem; }
+
+/* ---------- PRINT ---------- */
+@media print {
+  body { background: #fff; padding: 0; }
+  .form-panel { display: none !important; }
+  .app-container { display: block; }
+  .preview-panel { height: auto; overflow: visible; padding: 0; display: block; }
+  .sheet { box-shadow: none; border-radius: 0; width: 210mm; height: 297mm; min-height: 297mm; break-inside: avoid; page-break-after: avoid; }
+  .sheet::before { border-radius: 0; }
+  @page { size: A4; margin: 0; }
+}
+@media (max-width: 1100px) {
+  .app-container { grid-template-columns: 1fr; }
+  .form-panel, .preview-panel { height: auto; }
+  .preview-panel { overflow-x: auto; justify-content: flex-start; }
+}
+</style>
 </head>
 <body>
 
@@ -237,135 +175,96 @@
 
   <!-- LEFT: FORM SETTINGS -->
   <div class="form-panel">
-    <h2>🤖 Robotics Report Builder</h2>
-    <a href="page2.html" style="font-size: 0.8rem; color: var(--accent); text-decoration: none; display: inline-block; margin-bottom: 12px;">Switch to other format</a>
+    <div class="panel-head">
+      <h2>🤖 Robotics Report Builder</h2>
+      <a href="page2.html">Switch to other format</a>
+    </div>
+    <div class="panel-body">
 
-    <div class="section-title">Brand Logos</div>
-    <div class="row">
+      <div class="section-title">Watermark Logo</div>
       <div class="file-input-box">
-        <label for="schoolLogoInput">School Logo</label>
-        <input type="file" id="schoolLogoInput" accept="image/*" onchange="loadLogo(event, 'schoolLogoImg', 'schoolLogoTxt')">
+        <label for="watermarkInput">⬆ Upload Watermark Logo</label>
+        <input type="file" id="watermarkInput" accept="image/*" onchange="loadWatermark(event)">
+        <button class="btn-sm" onclick="removeWatermark()">Remove Watermark</button>
       </div>
-      <div class="file-input-box">
-        <label for="partnerLogoInput">Partner Logo</label>
-        <input type="file" id="partnerLogoInput" accept="image/*" onchange="loadLogo(event, 'partnerLogoImg', 'partnerLogoTxt')">
+      <div class="form-group" style="margin-top:9px;">
+        <label>Watermark Opacity</label>
+        <div class="sl-row">
+          <input type="range" id="wmOp" min="2" max="35" value="8" oninput="setWmOp(this.value)">
+          <span id="wmOpLbl">8%</span>
+        </div>
       </div>
-    </div>
 
-    <div class="section-title">Class & Project Info</div>
-    <div class="row">
-      <div class="form-group">
-        <label>Grade</label>
-        <input type="text" id="inGrade" value="Grade 7" oninput="updateReport()">
+      <div class="section-title">Class & Project Info</div>
+      <div class="row">
+        <div class="form-group"><label>Grade</label><input type="text" id="inGrade" value="Grade 7" oninput="updateReport()"></div>
+        <div class="form-group"><label>Division / Section</label><input type="text" id="inDivision" value="Division B" oninput="updateReport()"></div>
       </div>
-      <div class="form-group">
-        <label>Division / Section</label>
-        <input type="text" id="inDivision" value="Division B" oninput="updateReport()">
+      <div class="form-group"><label>Project Name</label><input type="text" id="inProject" value="Autonomous Obstacle-Sensing Robotic Rover" oninput="updateReport()"></div>
+      <div class="row">
+        <div class="form-group"><label>Month & Year</label><input type="text" id="inMonth" value="November 2026" oninput="updateReport()"></div>
+        <div class="form-group">
+          <label>Project Status</label>
+          <select id="inStatus" onchange="updateReport()">
+            <option value="Completed" selected>Completed</option>
+            <option value="In Progress">In Progress</option>
+          </select>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>Project Name</label>
-      <input type="text" id="inProject" value="Autonomous Obstacle-Sensing Robotic Rover" oninput="updateReport()">
-    </div>
+      <div class="section-title">Attendance & Schedule</div>
+      <div class="row-3">
+        <div class="form-group"><label>Class Strength</label><input type="number" id="inStrength" value="28" min="0" oninput="updateReport()"></div>
+        <div class="form-group"><label>Attended</label><input type="number" id="inAttended" value="26" min="0" oninput="updateReport()"></div>
+        <div class="form-group"><label>Session Timing</label><input type="text" id="inTiming" value="Tue & Thu (2:00 - 3:30 PM)" oninput="updateReport()"></div>
+      </div>
 
-    <div class="row">
-      <div class="form-group">
-        <label>Month & Year</label>
-        <input type="text" id="inMonth" value="November 2024" oninput="updateReport()">
+      <div class="section-title">4 Class Action Images</div>
+      <div class="row">
+        <div class="file-input-box"><label for="actImg1">⬆ Action Image 1</label><input type="file" id="actImg1" accept="image/*" onchange="loadActionImage(event, 'imgP1', 'txtP1')"></div>
+        <div class="file-input-box"><label for="actImg2">⬆ Action Image 2</label><input type="file" id="actImg2" accept="image/*" onchange="loadActionImage(event, 'imgP2', 'txtP2')"></div>
       </div>
-      <div class="form-group">
-        <label>Project Status</label>
-        <select id="inStatus" onchange="updateReport()">
-          <option value="Completed" selected>Completed</option>
-          <option value="In Progress">In Progress</option>
-        </select>
+      <div class="row" style="margin-top: 8px;">
+        <div class="file-input-box"><label for="actImg3">⬆ Action Image 3</label><input type="file" id="actImg3" accept="image/*" onchange="loadActionImage(event, 'imgP3', 'txtP3')"></div>
+        <div class="file-input-box"><label for="actImg4">⬆ Action Image 4</label><input type="file" id="actImg4" accept="image/*" onchange="loadActionImage(event, 'imgP4', 'txtP4')"></div>
       </div>
-    </div>
 
-    <div class="section-title">Attendance & Schedule</div>
-    <div class="row-3">
+      <div class="section-title">3-Paragraph Story</div>
       <div class="form-group">
-        <label>Class Strength</label>
-        <input type="number" id="inStrength" value="28" oninput="updateReport()">
+        <label>Paragraph 1: Challenge Scope & Team Planning</label>
+        <textarea id="inPara1" rows="5" oninput="updateReport()">During this month's robotics curriculum, the class embarked collectively on engineering an autonomous obstacle-avoidance rover. The goal was to challenge students to apply concepts of ultrasound echolocation, digital input/output mapping, and chassis structural balance. In the introductory sessions, students divided into collaborative small squads to dissect schematic diagrams and formulate mechanical roadmaps. They investigated the performance differences between tank treads and traditional rubber wheels across smooth and textured floors. Each team produced initial isometric sketches, established assigned responsibilities for chassis assembly, and mapped out sensor coordinate angles to maximize obstacle detection fields.</textarea>
       </div>
       <div class="form-group">
-        <label>Attended</label>
-        <input type="number" id="inAttended" value="26" oninput="updateReport()">
+        <label>Paragraph 2: Assembly, Wiring & Algorithm Design</label>
+        <textarea id="inPara2" rows="5" oninput="updateReport()">In the build phase, the classroom transitioned into an active engineering laboratory where students mounted dual direct-current gear motors, wired H-bridge motor drivers, and positioned microcontroller units. Careful attention was placed on wire neatness and power-rail separation to prevent voltage dropouts between motor spikes and digital logic pins. Moving into the logic implementation, students developed nested conditional control routines that read distances in centimeters. When obstacle thresholds were breached, the robots executed smooth turn-away sequences rather than sudden stops. Students actively refined calibration constants within their code loops to account for mechanical motor differences.</textarea>
       </div>
       <div class="form-group">
-        <label>Session Timing</label>
-        <input type="text" id="inTiming" value="Tue & Thu (2:00 - 3:30 PM)" oninput="updateReport()">
+        <label>Paragraph 3: Live Class Arena Trials & Learning Outcomes</label>
+        <textarea id="inPara3" rows="5" oninput="updateReport()">The final phase culminated in a dynamic arena trial where rovers navigated a randomized obstacle course containing variable-angle barriers. Across multiple evaluation rounds, student groups logged performance metrics, monitored power utilization, and addressed real-time sensor glare and blind-spot anomalies. Through peer feedback and systematic iteration, teams resolved hardware issues including loose breadboard links and incorrect polarity orientations. The entire division showcased exceptional perseverance and analytical reasoning under active testing constraints. Looking forward to the upcoming term, the curriculum will transition into introducing infrared line-tracking arrays and synchronized swarm communication principles.</textarea>
       </div>
-    </div>
 
-    <div class="section-title">4 Class Action Images</div>
-    <div class="row">
-      <div class="file-input-box">
-        <label for="actImg1">Action Image 1</label>
-        <input type="file" id="actImg1" accept="image/*" onchange="loadActionImage(event, 'imgP1', 'txtP1')">
-      </div>
-      <div class="file-input-box">
-        <label for="actImg2">Action Image 2</label>
-        <input type="file" id="actImg2" accept="image/*" onchange="loadActionImage(event, 'imgP2', 'txtP2')">
-      </div>
-    </div>
-    <div class="row" style="margin-top: 6px;">
-      <div class="file-input-box">
-        <label for="actImg3">Action Image 3</label>
-        <input type="file" id="actImg3" accept="image/*" onchange="loadActionImage(event, 'imgP3', 'txtP3')">
+      <div class="section-title">Current Invention Story & Photo</div>
+      <div class="form-group"><label>Invention Story Headline</label><input type="text" id="inInventionHeadline" value="Phase 4: Advanced AI Vision & Obstacle Recognition Prototype" oninput="updateReport()"></div>
+      <div class="form-group">
+        <label>Invention Story Narrative</label>
+        <textarea id="inInventionContent" rows="5" oninput="updateReport()">As an ambitious capstone extension, student innovators designed and integrated an experimental onboard camera module capable of color-based landmark sorting. Working in multidisciplinary squads, students calibrated optical sensors, fine-tuned threshold algorithms, and evaluated real-time processing speeds under varying ambient light conditions. Through rigorous iterative testing inside the competition arena, teams resolved frame-rate bottlenecks and optimized their actuation logic. This student-led invention successfully bridged foundational circuitry concepts with advanced machine vision principles, highlighting exceptional problem-solving depth and creativity.</textarea>
       </div>
       <div class="file-input-box">
-        <label for="actImg4">Action Image 4</label>
-        <input type="file" id="actImg4" accept="image/*" onchange="loadActionImage(event, 'imgP4', 'txtP4')">
+        <label for="inInventionPhoto">⬆ Upload Invention Photo</label>
+        <input type="file" id="inInventionPhoto" accept="image/*" onchange="loadInventionPhoto(event)">
+        <button class="btn-sm" onclick="removeInventionPhoto()">Remove Photo</button>
       </div>
-    </div>
 
-    <div class="section-title">3-Paragraph Story (5-10 Lines Each)</div>
-    <div class="form-group">
-      <label>Paragraph 1: Challenge Scope & Team Planning</label>
-      <textarea id="inPara1" rows="5" oninput="updateReport()">During this month's robotics curriculum, the class embarked collectively on engineering an autonomous obstacle-avoidance rover. The goal was to challenge students to apply concepts of ultrasound echolocation, digital input/output mapping, and chassis structural balance. In the introductory sessions, students divided into collaborative small squads to dissect schematic diagrams and formulate mechanical roadmaps. They investigated the performance differences between tank treads and traditional rubber wheels across smooth and textured floors. Each team produced initial isometric sketches, established assigned responsibilities for chassis assembly, and mapped out sensor coordinate angles to maximize obstacle detection fields.</textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Paragraph 2: Assembly, Wiring & Algorithm Design</label>
-      <textarea id="inPara2" rows="5" oninput="updateReport()">In the build phase, the classroom transitioned into an active engineering laboratory where students mounted dual direct-current gear motors, wired H-bridge motor drivers, and positioned microcontroller units. Careful attention was placed on wire neatness and power-rail separation to prevent voltage dropouts between motor spikes and digital logic pins. Moving into the logic implementation, students developed nested conditional control routines that read distances in centimeters. When obstacle thresholds were breached, the robots executed smooth turn-away sequences rather than sudden stops. Students actively refined calibration constants within their code loops to account for mechanical motor differences.</textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Paragraph 3: Live Class Arena Trials & Learning Outcomes</label>
-      <textarea id="inPara3" rows="5" oninput="updateReport()">The final phase culminated in a dynamic arena trial where rovers navigated a randomized obstacle course containing variable-angle barriers. Across multiple evaluation rounds, student groups logged performance metrics, monitored power utilization, and addressed real-time sensor glare and blind-spot anomalies. Through peer feedback and systematic iteration, teams resolved hardware issues including loose breadboard links and incorrect polarity orientations. The entire division showcased exceptional perseverance and analytical reasoning under active testing constraints. Looking forward to the upcoming term, the curriculum will transition into introducing infrared line-tracking arrays and synchronized swarm communication principles.</textarea>
-    </div>
-
-    <!-- CURRENT INVENTION STORY & PHOTO -->
-    <div class="section-title">Current Invention Story & Photo</div>
-    <div class="form-group">
-      <label>Invention Story Headline</label>
-      <input type="text" id="inInventionHeadline" value="Phase 4: Advanced AI Vision & Obstacle Recognition Prototype" oninput="updateReport()">
-    </div>
-    <div class="form-group">
-      <label>Invention Story Narrative</label>
-      <textarea id="inInventionContent" rows="5" oninput="updateReport()">As an ambitious capstone extension, student innovators designed and integrated an experimental onboard camera module capable of color-based landmark sorting. Working in multidisciplinary squads, students calibrated optical sensors, fine-tuned threshold algorithms, and evaluated real-time processing speeds under varying ambient light conditions. Through rigorous iterative testing inside the competition arena, teams resolved frame-rate bottlenecks and optimized their actuation logic. This student-led invention successfully bridged foundational circuitry concepts with advanced machine vision principles, highlighting exceptional problem-solving depth and creativity.</textarea>
-    </div>
-    <div class="file-input-box">
-      <label for="inInventionPhoto">Upload Invention Photo</label>
-      <input type="file" id="inInventionPhoto" accept="image/*" onchange="loadInventionPhoto(event)">
-    </div>
-
-    <div class="row" style="margin-top: 11px;">
-      <div class="form-group">
-        <label>Coach Name</label>
-        <input type="text" id="inCoach" value="Lead Coach R. Vance" oninput="updateReport()">
+      <div class="section-title">Signatory</div>
+      <div class="row">
+        <div class="form-group"><label>Coach Name</label><input type="text" id="inCoach" value="Lead Coach R. Vance" oninput="updateReport()"></div>
+        <div class="form-group"><label>School Name</label><input type="text" id="inSchoolName" value="Oakridge International School" oninput="updateReport()"></div>
       </div>
-      <div class="form-group">
-        <label>School Name</label>
-        <input type="text" id="inSchoolName" value="Oakridge International School" oninput="updateReport()">
-      </div>
-    </div>
 
-    <div class="actions">
-      <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
-      <button class="btn btn-secondary" onclick="window.location.reload()">Reset</button>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn btn-secondary" onclick="window.location.reload()">Reset</button>
+      </div>
     </div>
   </div>
 
@@ -373,93 +272,102 @@
   <div class="preview-panel">
     <div class="sheet" id="printSheet">
 
-      <!-- Hole punch positioning marks (left safe margin) -->
+      <div class="watermark" id="watermarkBox"><img id="watermarkImg" src="" alt=""></div>
+      <div class="frame"></div>
       <div class="punch-guide punch-top"></div>
       <div class="punch-guide punch-mid"></div>
       <div class="punch-guide punch-bottom"></div>
 
-      <!-- HEADER WITH LOGOS -->
+      <!-- HEADER -->
       <div class="report-header">
-        <div class="logo-slot">
-          <img id="schoolLogoImg" src="" style="display:none;">
-          <span id="schoolLogoTxt">School Logo</span>
-        </div>
-        <div class="header-center">
-          <h1 id="outProject">Autonomous Obstacle-Sensing Robotic Rover</h1>
-          <h2>Class Monthly Progress Report</h2>
-        </div>
-        <div class="logo-slot">
-          <img id="partnerLogoImg" src="" style="display:none;">
-          <span id="partnerLogoTxt">Partner Logo</span>
-        </div>
+        <div class="kicker">Class Monthly Progress Report</div>
+        <h1 id="outProject">Autonomous Obstacle-Sensing Robotic Rover</h1>
+        <p>Robotics Curriculum • Student Progress & Achievement Summary</p>
       </div>
 
-      <!-- CLASS METRICS INFO STRIP -->
+      <!-- METRICS STRIP -->
       <div class="meta-grid">
         <div class="meta-item">
           <div class="m-lbl">Grade & Division</div>
-          <div class="m-val"><span id="outGrade">Grade 7</span> - <span id="outDivision">Division B</span></div>
+          <div class="m-val"><span id="outGrade">Grade 7</span> – <span id="outDivision">Division B</span></div>
         </div>
         <div class="meta-item">
           <div class="m-lbl">Session Schedule</div>
           <div class="m-val" id="outTiming">Tue & Thu (2:00 - 3:30 PM)</div>
         </div>
         <div class="meta-item">
-          <div class="m-lbl">Attendance / Strength</div>
-          <div class="m-val"><span id="outAttended">26</span> / <span id="outStrength">28</span> Present (<span id="outPercent">93%</span>)</div>
+          <div class="m-lbl">Attendance</div>
+          <div class="m-val"><span id="outAttended">26</span> / <span id="outStrength">28</span> <small>present (<span id="outPercent">93%</span>)</small></div>
+          <div class="meter"><i id="outMeter" style="width:93%"></i></div>
         </div>
         <div class="meta-item">
           <div class="m-lbl">Project Status</div>
-          <div class="m-val">
-            <span id="outStatus" class="status-pill status-completed">Completed</span>
-          </div>
+          <div class="m-val"><span id="outStatus" class="status-pill status-completed">Completed</span></div>
         </div>
       </div>
 
-      <!-- 4 CLASS-IN-ACTION IMAGES -->
-      <div class="images-grid">
-        <div class="img-box"><img id="imgP1" src="" style="display:none;"><span id="txtP1">1. Squad Planning</span></div>
-        <div class="img-box"><img id="imgP2" src="" style="display:none;"><span id="txtP2">2. Hardware Assembly</span></div>
-        <div class="img-box"><img id="imgP3" src="" style="display:none;"><span id="txtP3">3. Sensor Coding</span></div>
-        <div class="img-box"><img id="imgP4" src="" style="display:none;"><span id="txtP4">4. Arena Testing</span></div>
+      <!-- PHOTOS -->
+      <div>
+        <div class="sh">
+          <span class="chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/></svg></span>
+          Class in Action
+        </div>
+        <div class="images-grid">
+          <figure class="fig"><div class="img-box"><img id="imgP1" src="" alt="" style="display:none;"><span id="txtP1">Photo 1</span></div><figcaption>1. Squad Planning</figcaption></figure>
+          <figure class="fig"><div class="img-box"><img id="imgP2" src="" alt="" style="display:none;"><span id="txtP2">Photo 2</span></div><figcaption>2. Hardware Assembly</figcaption></figure>
+          <figure class="fig"><div class="img-box"><img id="imgP3" src="" alt="" style="display:none;"><span id="txtP3">Photo 3</span></div><figcaption>3. Sensor Coding</figcaption></figure>
+          <figure class="fig"><div class="img-box"><img id="imgP4" src="" alt="" style="display:none;"><span id="txtP4">Photo 4</span></div><figcaption>4. Arena Testing</figcaption></figure>
+        </div>
       </div>
 
-      <!-- 3-PARAGRAPH STORY -->
+      <!-- STORY -->
       <div class="story-section">
-        <div class="story-title">Curriculum Progress & Learning Narrative</div>
-
+        <div class="sh">
+          <span class="chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg></span>
+          Curriculum Progress & Learning Narrative
+        </div>
         <div class="story-block">
           <h4>Phase 1: Engineering Specifications & Team Planning</h4>
           <p id="outPara1"></p>
         </div>
-
         <div class="story-block">
           <h4>Phase 2: Hardware Wiring & Sensor Control Logic</h4>
           <p id="outPara2"></p>
         </div>
-
         <div class="story-block">
           <h4>Phase 3: Arena Performance, Troubleshooting & Future Scope</h4>
           <p id="outPara3"></p>
         </div>
+      </div>
 
-        <!-- INVENTION STORY PREVIEW BLOCK (SIDE-BY-SIDE: TEXT LEFT, IMAGE RIGHT) -->
-        <div class="invention-preview-block" id="inventionPreviewBlock">
-          <h4 id="outInventionHeadline"></h4>
-          <div class="invention-content-wrapper">
+      <!-- INVENTION STORY -->
+      <div class="invention-preview-block" id="inventionPreviewBlock">
+        <div class="sh">
+          <span class="chip c3"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
+          Current Invention Story
+        </div>
+        <div class="invention-content-wrapper" id="inventionWrapper">
+          <div>
+            <h4 id="outInventionHeadline"></h4>
             <p id="outInventionContent"></p>
-            <div class="invention-preview-img-container" id="inventionImgContainer">
-              <img id="outInventionImg" src="">
-            </div>
+          </div>
+          <div class="invention-preview-img-container" id="inventionImgContainer">
+            <img id="outInventionImg" src="" alt="">
           </div>
         </div>
       </div>
- 
+
       <!-- FOOTER -->
       <div class="report-footer">
-        <div><strong id="outSchoolName">Oakridge International School</strong> | STEM & Robotics Department</div>
-        <div>Month: <span id="outMonth">November 2024</span></div>
-        <div>Instructor: <strong id="outCoach">Lead Coach R. Vance</strong></div>
+        <div>
+          <div><strong id="outSchoolName">Oakridge International School</strong> | STEM & Robotics Department</div>
+          <div class="sub">Reporting period: <span id="outMonth">November 2026</span> &nbsp;•&nbsp; Issued: <span id="outDate"></span></div>
+        </div>
+        <div class="sig-box">
+          <div class="sig-line"></div>
+          <div class="nm" id="outCoach">Lead Coach R. Vance</div>
+          <div>Instructor Signature</div>
+        </div>
       </div>
 
     </div>
@@ -468,98 +376,101 @@
 </div>
 
 <script>
+  function $(id) { return document.getElementById(id); }
+  var hasInventionPhoto = false;
+
   function updateReport() {
-    document.getElementById('outGrade').innerText = document.getElementById('inGrade').value || '—';
-    document.getElementById('outDivision').innerText = document.getElementById('inDivision').value || '—';
-    document.getElementById('outProject').innerText = document.getElementById('inProject').value || 'Robotics Project Report';
-    document.getElementById('outMonth').innerText = document.getElementById('inMonth').value || '—';
-    document.getElementById('outTiming').innerText = document.getElementById('inTiming').value || '—';
-    document.getElementById('outCoach').innerText = document.getElementById('inCoach').value || '—';
-    document.getElementById('outSchoolName').innerText = document.getElementById('inSchoolName').value || 'School Partner';
+    $('outGrade').innerText = $('inGrade').value || '—';
+    $('outDivision').innerText = $('inDivision').value || '—';
+    $('outProject').innerText = $('inProject').value || 'Robotics Project Report';
+    $('outMonth').innerText = $('inMonth').value || '—';
+    $('outTiming').innerText = $('inTiming').value || '—';
+    $('outCoach').innerText = $('inCoach').value || '—';
+    $('outSchoolName').innerText = $('inSchoolName').value || 'School Partner';
 
-    // Attendance calculation
-    const strength = parseInt(document.getElementById('inStrength').value) || 0;
-    const attended = parseInt(document.getElementById('inAttended').value) || 0;
-    document.getElementById('outStrength').innerText = strength;
-    document.getElementById('outAttended').innerText = attended;
-    const rate = strength > 0 ? Math.round((attended / strength) * 100) : 0;
-    document.getElementById('outPercent').innerText = rate + '%';
+    // Attendance
+    var strength = parseInt($('inStrength').value) || 0;
+    var attended = parseInt($('inAttended').value) || 0;
+    var rate = strength > 0 ? Math.min(100, Math.round((attended / strength) * 100)) : 0;
+    $('outStrength').innerText = strength;
+    $('outAttended').innerText = attended;
+    $('outPercent').innerText = rate + '%';
+    $('outMeter').style.width = rate + '%';
 
-    // Status Pill
-    const statusVal = document.getElementById('inStatus').value;
-    const statusEl = document.getElementById('outStatus');
+    // Status pill
+    var statusVal = $('inStatus').value;
+    var statusEl = $('outStatus');
     statusEl.innerText = statusVal;
-    if (statusVal === 'Completed') {
-      statusEl.className = 'status-pill status-completed';
-    } else {
-      statusEl.className = 'status-pill status-inprogress';
-    }
+    statusEl.className = 'status-pill ' + (statusVal === 'Completed' ? 'status-completed' : 'status-inprogress');
 
-    // Paragraphs
-    document.getElementById('outPara1').innerText = document.getElementById('inPara1').value;
-    document.getElementById('outPara2').innerText = document.getElementById('inPara2').value;
-    document.getElementById('outPara3').innerText = document.getElementById('inPara3').value;
+    // Story
+    $('outPara1').innerText = $('inPara1').value;
+    $('outPara2').innerText = $('inPara2').value;
+    $('outPara3').innerText = $('inPara3').value;
 
-    // Invention Story
-    const invHeadline = document.getElementById('inInventionHeadline').value;
-    const invContent = document.getElementById('inInventionContent').value;
-    const invBlock = document.getElementById('inventionPreviewBlock');
-    
-    document.getElementById('outInventionHeadline').innerText = invHeadline;
-    document.getElementById('outInventionContent').innerText = invContent;
-
-    const hasImg = document.getElementById('outInventionImg').src && document.getElementById('outInventionImg').style.display !== 'none';
-    if (invHeadline.trim() !== '' || invContent.trim() !== '' || hasImg) {
-      invBlock.style.display = 'block';
-    } else {
-      invBlock.style.display = 'none';
-    }
+    // Invention story
+    var invHeadline = $('inInventionHeadline').value;
+    var invContent = $('inInventionContent').value;
+    $('outInventionHeadline').innerText = invHeadline;
+    $('outInventionContent').innerText = invContent;
+    $('inventionImgContainer').style.display = hasInventionPhoto ? 'block' : 'none';
+    $('inventionWrapper').className = 'invention-content-wrapper' + (hasInventionPhoto ? ' has-photo' : '');
+    $('inventionPreviewBlock').style.display =
+      (invHeadline.trim() !== '' || invContent.trim() !== '' || hasInventionPhoto) ? 'block' : 'none';
   }
 
-  function loadLogo(event, imgId, txtId) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = document.getElementById(imgId);
-        img.src = e.target.result;
-        img.style.display = 'block';
-        document.getElementById(txtId).style.display = 'none';
-      };
-      reader.readAsDataURL(file);
-    }
+  function readImage(event, cb) {
+    var file = event.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (e) { cb(e.target.result); };
+    reader.readAsDataURL(file);
   }
 
+  // Watermark
+  function loadWatermark(event) {
+    readImage(event, function (src) {
+      $('watermarkImg').src = src;
+      $('watermarkBox').style.display = 'flex';
+    });
+  }
+  function removeWatermark() {
+    $('watermarkImg').removeAttribute('src');
+    $('watermarkBox').style.display = 'none';
+    $('watermarkInput').value = '';
+  }
+  function setWmOp(val) {
+    $('wmOpLbl').innerText = val + '%';
+    $('watermarkImg').style.opacity = val / 100;
+  }
+
+  // Action images
   function loadActionImage(event, imgId, txtId) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = document.getElementById(imgId);
-        img.src = e.target.result;
-        img.style.display = 'block';
-        document.getElementById(txtId).style.display = 'none';
-      };
-      reader.readAsDataURL(file);
-    }
+    readImage(event, function (src) {
+      var img = $(imgId);
+      img.src = src;
+      img.style.display = 'block';
+      $(txtId).style.display = 'none';
+    });
   }
 
+  // Invention photo
   function loadInventionPhoto(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = document.getElementById('outInventionImg');
-        img.src = e.target.result;
-        img.style.display = 'block';
-        document.getElementById('inventionImgContainer').style.display = 'block';
-        updateReport();
-      };
-      reader.readAsDataURL(file);
-    }
+    readImage(event, function (src) {
+      $('outInventionImg').src = src;
+      hasInventionPhoto = true;
+      updateReport();
+    });
+  }
+  function removeInventionPhoto() {
+    $('outInventionImg').removeAttribute('src');
+    $('inInventionPhoto').value = '';
+    hasInventionPhoto = false;
+    updateReport();
   }
 
   // Initial populate
+  $('outDate').innerText = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
   updateReport();
 </script>
 
