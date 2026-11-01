@@ -1,2 +1,2 @@
 # MonthlyReport
-The Repository is created for Robotics Monthly Project Generator.
+The Repository is created for Robotics Monthly Report Generator.
